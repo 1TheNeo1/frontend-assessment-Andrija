@@ -1,0 +1,24 @@
+{
+  "name": "eezy-frontend-assessment",
+  "version": "2.0.0",
+  "description": "A skill assessment for Eezy engineering candidates.",
+  "main": "server.js",
+  "private": "true",
+  "scripts": {
+    "dev": "node server.js",
+    "scss": "node-sass ./public/scss/style.scss ./public/css/style.css --output-style compressed",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "install": "^0.13.0",
+    "node-sass": "^7.0.1",
+    "npm": "^8.19.1"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "sass": "^1.52.1",
+    "typescript": "^4.7.2"
+  }
+}
