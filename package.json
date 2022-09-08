@@ -5,8 +5,8 @@
   "main": "server.js",
   "private": "true",
   "scripts": {
-    "dev": "node server.js",
-    "scss": "node-sass ./public/scss/style.scss ./public/css/style.css --output-style compressed",
+    "dev": "node server.js & npm run scss",
+    "scss": "sass --watch public/scss/style.scss public/css/main.css",
     "test": "jest"
   },
   "dependencies": {

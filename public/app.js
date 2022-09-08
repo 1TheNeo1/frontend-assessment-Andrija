@@ -1,14 +1,10 @@
 const radioButtonsContainer = document.getElementById('radio-buttons')
 const sidebarWrapper = document.querySelector('.sidebar-wrapper')
 const sidebarChevIcon = document.querySelector('.radio-buttons__chevron')
-const loader = document.getElementById('loader')
+let collectedData
 
-const animationStates = {
-  show: true,
-  hide: false
-}
-
-const animationState = (animation, state) => {
+const animationState = (state) => {
+  const animation = document.getElementById('loader')
   if (state === true) {
     animation.classList.remove('hide-animation')
     animation.classList.add('show-animation')
@@ -26,7 +22,7 @@ const radiosEventListener = () => {
   const radios = document.querySelectorAll('.radio-buttons__button')
   radios.forEach((radio) => {
     radio.addEventListener('change', (e) => {
-      fetchData(parseInt(radio.value))
+      importData(parseInt(radio.value))
     })
   })
 }
@@ -45,7 +41,9 @@ document.querySelector('body').addEventListener('click', (e) => {
   }
 })
 
-const importData = (data) => {
+const importData = (dataID) => {
+  animationState(true)
+  const data = collectedData.find(data => data.id === dataID) // Find the data based on the id of the objecet
   const image = document.getElementById('image')
   const title = document.getElementById('title')
   const description = document.getElementById('text')
@@ -54,27 +52,17 @@ const importData = (data) => {
   image.src = './images/' + data.coverImage
   title.innerText = data.title
   description.innerText = data.description
-
   radioButtonsTitle.innerText = data.title
-}
 
-const fetchData = (itemID) => {
-  animationState(loader, animationStates.hide)
-  fetch('http://localhost:3000/api/data.json').then((response) => response.json()).then((data) => {
-    data.map((item, i) => {
-      return (itemID === item.id) ? importData(item) : ''
-    }).join('')
-    animationState(loader, animationStates.show)
-  })
+  animationState(false)
 }
 
 fetch('http://localhost:3000/api/data.json').then((response) => response.json()).then((data) => {
-  radioButtonsContainer.innerHTML = data.sort((a, b) => a.order - b.order).map((item, index) => {
-    if (index === 0) {
-      importData(item)
-    }
+  collectedData = data.sort((a, b) => a.order - b.order)
+  radioButtonsContainer.innerHTML = collectedData.map((item, index) => {
     return `<div class="radio-buttons__button-content"> <input id="option-${index}" class="radio-buttons__button" type="radio" name="radio-button" value="${item.id}" ${index === 0 ? 'checked' : ''} /> <label for="option-${index}" class="radio-button-label">${item.shortTitle}</label></div>`
   }).join('')
+  importData(collectedData[0].id)
   radiosEventListener()
-  animationState(loader, animationStates.hide)
+  animationState(false)
 })
