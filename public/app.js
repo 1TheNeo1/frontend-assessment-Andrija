@@ -44,15 +44,11 @@ document.querySelector('body').addEventListener('click', (e) => {
 const importData = (dataID) => {
   animationState(true)
   const data = collectedData.find(data => data.id === dataID) // Find the data based on the id of the objecet
-  const image = document.getElementById('image')
-  const title = document.getElementById('title')
-  const description = document.getElementById('text')
-  const radioButtonsTitle = document.querySelector('.radio-buttons__title p')
 
-  image.src = './images/' + data.coverImage
-  title.innerText = data.title
-  description.innerText = data.description
-  radioButtonsTitle.innerText = data.title
+  document.getElementById('image').src = './images/' + data.coverImage
+  document.getElementById('title').innerText = data.title
+  document.getElementById('text').innerText = data.description
+  document.querySelector('.radio-buttons__title p').innerText = data.title
 
   animationState(false)
 }
@@ -60,7 +56,11 @@ const importData = (dataID) => {
 fetch('http://localhost:3000/api/data.json').then((response) => response.json()).then((data) => {
   collectedData = data.sort((a, b) => a.order - b.order)
   radioButtonsContainer.innerHTML = collectedData.map((item, index) => {
-    return `<div class="radio-buttons__button-content"> <input id="option-${index}" class="radio-buttons__button" type="radio" name="radio-button" value="${item.id}" ${index === 0 ? 'checked' : ''} /> <label for="option-${index}" class="radio-button-label">${item.shortTitle}</label></div>`
+    return `
+     <div class="radio-buttons__button-content">
+      <input id="option-${index}" class="radio-buttons__button" type="radio" name="radio-button" value="${item.id}" ${index === 0 ? 'checked' : ''} />
+      <label for="option-${index}" class="radio-button-label">${item.shortTitle}</label>
+     </div>`
   }).join('')
   importData(collectedData[0].id)
   radiosEventListener()
