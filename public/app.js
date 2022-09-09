@@ -22,12 +22,12 @@ const radiosEventListener = () => {
   const radios = document.querySelectorAll('.radio-buttons-content__button')
   radios.forEach((radio) => {
     radio.addEventListener('change', (e) => {
-      setActiveItem(parseInt(radio.value))
+      setActiveItem(parseInt(radio.value), collectedData)
     })
   })
 }
 
-const setActiveItem = (dataID) => {
+const setActiveItem = (dataID, collectedData) => {
   const data = collectedData.find(data => data.id === dataID) // Find the data based on the id of the objecet
 
   document.getElementById('image').src = './images/' + data.coverImage
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <label for="option-${index}" class="radio-buttons-content__label">${item.shortTitle}</label>
      </div>`
     }).join('')
-    setActiveItem(collectedData[0].id)
+    setActiveItem(collectedData[0].id, collectedData)
     radiosEventListener()
     showLoader(false)
   })
@@ -64,4 +64,4 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 })
 
-module.exports = setActiveItem
+module.exports = { setActiveItem, radiosEventListener }
