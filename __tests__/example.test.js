@@ -58,27 +58,4 @@ describe('testig functions from app.js', () => {
     expect(document.getElementById('title').innerText).toEqual('All Photos')
     expect(document.getElementById('text').innerText).toEqual('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non arcu risus quis varius quam quisque id diam. Pellentesque sit amet porttitor eget. Ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim.')
   })
-  // test('radiosEventListener', () => {
-  //   document.body.innerHTML = `
-  //   <div class="sidebar-wrapper hide-radio-btns">
-  //     <div id="radio-buttons" class="radio-buttons">
-  //     <div class="radio-buttons-content">
-  //     <input id="option-0" class="radio-buttons-content__button" type="radio" name="radio-button" value="129383">
-  //     <label for="option-0" class="radio-buttons-content__label">All</label>
-  //    </div>
-  //    <div class="radio-buttons-content">
-  //     <input id="option-2" class="radio-buttons-content__button" type="radio" name="radio-button" value="542322">
-  //     <label for="option-2" class="radio-buttons-content__label">Pro</label>
-  //    </div></div>
-  //   </div>
-  //     <img id="image" src="" class="item-box__image" alt="natue image" />
-  //     <div class="item-box__text-content">
-  //       <h2 id="title" class="item-box__title"></h2>
-  //       <p id="text" class="item-box__text"></p>
-  //     </div>  
-  //   `
-  //   app.radiosEventListener(mockCollectedData)
-  //   document.querySelector('.radio-buttons-content__label').click()
-  //   expect(document.getElementById('title').innerText).toEqual('All Photos')
-  // })
 })

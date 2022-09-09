@@ -88,7 +88,7 @@ h2 {
   flex-grow: 1;
 }
 .item-box__text-content {
-  padding: 10px 15px;
+  padding: 10px 20px 30px 20px;
 }
 .item-box__title {
   font-size: 32px;

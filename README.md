@@ -1,71 +1,17 @@
-# Eezy Frontend Code Challenge
+#Instructions
+To run this app you need to type these commands "npm install" and "npm run dev".
+To gain bonus points I have been working with SASS/SCSS instead of the CSS. The why SASS work is that upon running the "dev" command "scss" command is also being run. SCSS code is compiling from the /public/scss/style.scss to the /public/css/main.css file.
+I have been also using the BEM rules for class names.
 
-The goal of this challenge is to build a custom dropdown radio selector, populated with data from a server endpoint. This test is designed to be a quick assessment of intermediate CSS selectors and your knowledge of Javascript. We hope that you will take whatever approach you feel best showcases the skills you would like us to know about.
+For the loading icon, I have used Lottie animations. (I have added a 1000ms timeout for the loading icon because otherwise, you wouldn't be able to see it).
 
-## Instructions
+#How the app works
+Upon loading the document on the website I am fetching the data from the data.json sorted it based on order property and stored it in the variable "collectedData". After that, I am creating radio buttons for each object in the data.json. 
 
-In the `/mockups` directory you will find 10 images that show the various states of the dropdown selector. The app you deliver should account for each of these states.
+setActiveItem -  function takes two parameters id of the object and also the array of objects "collectedData". The job of the function is to upon clicking on the radio button fetch the data from the "collectedData" to the right DOM elements.
 
-Install dependencies using yarn with `yarn install`. 
+For the app, I have set the maxim width for the mobile to 450px (The reason for that is since the breakpoint is 800px and the image height is 150px on mobile, most of the image is invisible )
+For the font, I was using "sans-serif" since it was a close resemblance to the mockups.
 
-Start the server by running `yarn dev`.
-
-> *NOTE:* You may use npm instead of yarn if you wish.
-
-Open a browser and navigate to `http://localhost:3000` to view the given `index.html` file.
-
-You will find the data for building the app at `http://localhost:3000/api/data.json`. **DO NOT** Modify the data.json file.
-
-## App Acceptance Criteria
-
-### Behavior
-- All content (both the dropdown and the card) should be populated by making a request to the given data.json endpoint.
-- Upon load, the dropdown should be filled with the `All Photos` selection, and the `All Photos` card should be visible.
-- Opening the filter flips the arrow and turns it orange.
-- Filter dropdown closes when clicked outside the filter.
-- 100% of options and dropdown area is clickable.
-- Selecting a radio option changes the current selection text.
-- Selecting a radio option changes the currently shown card to match the dropdown selection.
-- Changing the selection should not cause a page refresh to update the current selection or the card. 
-
-#### Testing
-We expect the code you write to have tests included. It is up to you to decide which tests would be most valuable if this were an app that were to be deployed in a production environment. Jest is pre-configured with a simple example test. You may switch to a different test framework if you desire.
-
-### Styling
-- Adheres closely to the designed files
-- The site works on both a mobile size and a desktop size layout.
-- The breakpoint between the layouts should be 800px.
-- Style details (border radius, colors, spacing) are applied correctly.
-
-#### Filter 
-- Filter is responsive to different display sizes.
-- Default browser radio buttons are replaced with styled alternatives.
-- Filter and options borders line up correctly.
-- User selection is disabled.
-- Browser focus outlines are disabled.
-- The font size is 16px.
-
-#### Card
-- Card is responsive to different display sizes.
-- The image height is 150px on mobile and 250px on desktop..
-- The card title is 24px on mobile and 32px on desktop.
-- The card description is 16px.
-
-## Technology
-- **DO NOT** use any pre-built UI elements from frameworks like Material UI, Bootstrap, Foundation, MUI, etc.
-- Browser Support: Edge+, Last 2 Chrome, Firefox, & Safari
-- You may utilize any code bundling service (e.g., webpack, vite, parcel, etc.)
-- You may utilize any local server if you prefer not to use Express
-
-> *NOTE* If you do change from the given Express server, you must still be able to make a request to `/api/data.json` to populate the dropdown.
-
-# Bonus Points
-While not required, here are some ideas on how you can showcase your skills further.
-
-- BEM class names
-- SCSS / PostCSS
-- Craft a loading state for the control
-
-# Delivery Instructions
-- Write a short README.md file (replacing this one) that includes instructions on running your app as well as describing any decisions you made during the project that you'd like us to know about.
-- Create a .zip archive of your files and email them to `pdowner+frontend-assessment@eezy.com` with the subject line `Frontend Challenge Completed`.
+#Added modules
+I have also installed "concurrently" - (npm install -g concurrently). Concurrently allows users to run multiple commands "run server and scss" at the same time. There is a default way for this with just writing commands next to one another in package.json -> dev, but "concurrently" is a much safer option since with the standard option if one process fails, others still keep running and you won't even notice the difference. Concurrently will on the other hand kill all the processes if one fails.
