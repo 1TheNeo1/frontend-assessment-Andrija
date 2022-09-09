@@ -1,9 +1,9 @@
 const radioButtonsContainer = document.getElementById('radio-buttons')
 const sidebarWrapper = document.querySelector('.sidebar-wrapper')
-const sidebarChevIcon = document.querySelector('.radio-buttons__chevron')
+const sidebarChevIcon = document.querySelector('.sidebar-wrapper__chevron')
 let collectedData
 
-const animationState = (state) => {
+const showLoader = (state) => {
   const animation = document.getElementById('loader')
   if (state === true) {
     animation.classList.remove('hide-animation')
@@ -19,50 +19,49 @@ const animationState = (state) => {
 }
 
 const radiosEventListener = () => {
-  const radios = document.querySelectorAll('.radio-buttons__button')
+  const radios = document.querySelectorAll('.radio-buttons-content__button')
   radios.forEach((radio) => {
     radio.addEventListener('change', (e) => {
-      importData(parseInt(radio.value))
+      setActiveItem(parseInt(radio.value))
     })
   })
 }
 
-sidebarWrapper.addEventListener('click', (e) => {
-  if (e.target !== radioButtonsContainer && !radioButtonsContainer.contains(e.target)) {
-    sidebarWrapper.classList.toggle('hide-radio-btns')
-    sidebarChevIcon.classList.toggle('chevron-orange')
-  }
-})
-
-document.querySelector('body').addEventListener('click', (e) => {
-  if (e.target !== sidebarWrapper && !sidebarWrapper.contains(e.target)) {
-    sidebarWrapper.classList.add('hide-radio-btns')
-    sidebarChevIcon.classList.remove('chevron-orange')
-  }
-})
-
-const importData = (dataID) => {
-  animationState(true)
+const setActiveItem = (dataID) => {
   const data = collectedData.find(data => data.id === dataID) // Find the data based on the id of the objecet
 
   document.getElementById('image').src = './images/' + data.coverImage
   document.getElementById('title').innerText = data.title
   document.getElementById('text').innerText = data.description
-  document.querySelector('.radio-buttons__title p').innerText = data.title
-
-  animationState(false)
+  document.querySelector('.sidebar-wrapper__title p').innerText = data.title
 }
-
-fetch('http://localhost:3000/api/data.json').then((response) => response.json()).then((data) => {
-  collectedData = data.sort((a, b) => a.order - b.order)
-  radioButtonsContainer.innerHTML = collectedData.map((item, index) => {
-    return `
-     <div class="radio-buttons__button-content">
-      <input id="option-${index}" class="radio-buttons__button" type="radio" name="radio-button" value="${item.id}" ${index === 0 ? 'checked' : ''} />
-      <label for="option-${index}" class="radio-button-label">${item.shortTitle}</label>
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('http://localhost:3000/api/data.json').then((response) => response.json()).then((data) => {
+    collectedData = data.sort((a, b) => a.order - b.order)
+    radioButtonsContainer.innerHTML = collectedData.map((item, index) => {
+      return `
+     <div class="radio-buttons-content">
+      <input id="option-${index}" class="radio-buttons-content__button" type="radio" name="radio-button" value="${item.id}" ${index === 0 ? 'checked' : ''} />
+      <label for="option-${index}" class="radio-buttons-content__label">${item.shortTitle}</label>
      </div>`
-  }).join('')
-  importData(collectedData[0].id)
-  radiosEventListener()
-  animationState(false)
+    }).join('')
+    setActiveItem(collectedData[0].id)
+    radiosEventListener()
+    showLoader(false)
+  })
+  sidebarWrapper.addEventListener('click', (e) => {
+    if (e.target !== radioButtonsContainer && !radioButtonsContainer.contains(e.target)) {
+      sidebarWrapper.classList.toggle('hide-radio-btns')
+      sidebarChevIcon.classList.toggle('chevron-orange')
+    }
+  })
+
+  document.addEventListener('click', (e) => {
+    if (e.target !== sidebarWrapper && !sidebarWrapper.contains(e.target)) {
+      sidebarWrapper.classList.add('hide-radio-btns')
+      sidebarChevIcon.classList.remove('chevron-orange')
+    }
+  })
 })
+
+module.exports = setActiveItem

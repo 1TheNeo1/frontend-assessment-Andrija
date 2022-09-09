@@ -18,7 +18,7 @@ body {
 
 
 
-#loader {
+.loader {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -27,7 +27,7 @@ body {
 	background-color: #fff;
 	box-shadow: 0 0 0px 99999px rgb(255 255 255);
 
-	.loader__text {
+	&__text {
 		color: rgb(93, 104, 248);
 		text-align: center;
 		font-weight: 800;
@@ -54,6 +54,19 @@ body {
 	display: flex;
 	flex-direction: column;
 	padding: 15px;
+	&__title {
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 4px 0;
+		cursor: pointer;
+	}
 }
 
 p,
@@ -63,6 +76,7 @@ h2 {
 	padding: 0;
 }
 
+// TODO change parent class to &
 .item-box {
 	border: 1px solid #d5d5d5;
 	border-radius: 15px;
@@ -70,7 +84,7 @@ h2 {
 	width: min-content;
 	width: 100%;
 
-	.item-box__image {
+	&__image {
 		width: auto;
 		width: 100%;
 		object-fit: cover;
@@ -78,67 +92,27 @@ h2 {
 		flex-grow: 1;
 	}
 
-	.item-box__text-content {
+	&__text-content {
 		padding: 10px 15px;
+	}
 
-		.item-box__title {
-			font-size: 32px;
-			margin: 10px 0;
-		}
+	&__title {
+		font-size: 32px;
+		margin: 18px 0;
+	}
 
-		.item-box__text {
-			font-size: var(--text-size);
-			line-height: 1.5;
-		}
+	&__text {
+		font-size: var(--text-size);
+		line-height: 1.5;
 	}
 }
 
 
 
-
-.radio-buttons__button-content {
-	display: flex;
+.radio-buttons {
 	margin-top: 10px;
 
-	.radio-buttons__button {
-		cursor: pointer;
-	}
-
-	.radio-button-label {
-		cursor: pointer;
-	}
-}
-
-.radio-button-label {
-	padding-left: 10px;
-	width: 100%;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
-.radio-buttons__title {
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 4px 0;
-	cursor: pointer;
-}
-
-#radio-buttons {
-	margin-top: 10px;
-	.radio-button-label {
+	&__label {
 		padding-left: 10px;
 		width: 100%;
 		padding-top: 5px;
@@ -149,6 +123,36 @@ h2 {
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+	}
+	&__chevron {
+		&:not(.chevron-orange) {
+			svg {
+				transition: transform .4s;
+				transform: rotate(0deg);
+			}
+		}
+	}
+	&-content {
+		display: flex;
+		margin-top: 10px;
+	
+		&__button {
+			cursor: pointer;
+		}
+	
+		&__label {
+			cursor: pointer;
+			padding-left: 10px;
+			width: 100%;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
 	}
 }
 
@@ -212,14 +216,6 @@ input[type="radio"] {
 	}
 }
 
-.radio-buttons__chevron {
-	&:not(.chevron-orange) {
-		svg {
-			transition: transform .4s;
-			transform: rotate(0deg);
-		}
-	}
-}
 
 .show-animation {
 	display: block;
@@ -232,13 +228,16 @@ input[type="radio"] {
 	-webkit-animation-timing-function: ease-in-out;
 	animation-fill-mode: forwards;
 }
+.hide-animation  lottie-player{
+	display: none;
+}
 
 @media only screen and (min-width: 801px) {
 	.item-box {
 		max-width: 500px;
 		flex-grow: 1;
 
-		.item-box__image {
+		&__image {
 			height: 250px;
 		}
 	}
@@ -254,6 +253,9 @@ input[type="radio"] {
 		flex-direction: column;
 		gap: 30px;
 		width: auto;
+		max-width: 400px;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
 	.item-box__image {
@@ -289,4 +291,4 @@ input[type="radio"] {
 		display: none;
 		height: 0px;
 	}
-}
+} 

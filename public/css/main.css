@@ -16,7 +16,7 @@ body {
   font-family: sans-serif;
 }
 
-#loader {
+.loader {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -25,7 +25,7 @@ body {
   background-color: #fff;
   box-shadow: 0 0 0px 99999px rgb(255, 255, 255);
 }
-#loader .loader__text {
+.loader__text {
   color: rgb(93, 104, 248);
   text-align: center;
   font-weight: 800;
@@ -52,6 +52,19 @@ body {
   flex-direction: column;
   padding: 15px;
 }
+.sidebar-wrapper__title {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  cursor: pointer;
+}
 
 p,
 h1,
@@ -67,37 +80,29 @@ h2 {
   width: min-content;
   width: 100%;
 }
-.item-box .item-box__image {
+.item-box__image {
   width: auto;
   width: 100%;
   object-fit: cover;
   object-position: top;
   flex-grow: 1;
 }
-.item-box .item-box__text-content {
+.item-box__text-content {
   padding: 10px 15px;
 }
-.item-box .item-box__text-content .item-box__title {
+.item-box__title {
   font-size: 32px;
-  margin: 10px 0;
+  margin: 18px 0;
 }
-.item-box .item-box__text-content .item-box__text {
+.item-box__text {
   font-size: var(--text-size);
   line-height: 1.5;
 }
 
-.radio-buttons__button-content {
-  display: flex;
+.radio-buttons {
   margin-top: 10px;
 }
-.radio-buttons__button-content .radio-buttons__button {
-  cursor: pointer;
-}
-.radio-buttons__button-content .radio-button-label {
-  cursor: pointer;
-}
-
-.radio-button-label {
+.radio-buttons__label {
   padding-left: 10px;
   width: 100%;
   padding-top: 5px;
@@ -109,25 +114,19 @@ h2 {
   -ms-user-select: none;
   user-select: none;
 }
-
-.radio-buttons__title {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 4px 0;
-  cursor: pointer;
+.radio-buttons__chevron:not(.chevron-orange) svg {
+  transition: transform 0.4s;
+  transform: rotate(0deg);
 }
-
-#radio-buttons {
+.radio-buttons-content {
+  display: flex;
   margin-top: 10px;
 }
-#radio-buttons .radio-button-label {
+.radio-buttons-content__button {
+  cursor: pointer;
+}
+.radio-buttons-content__label {
+  cursor: pointer;
   padding-left: 10px;
   width: 100%;
   padding-top: 5px;
@@ -191,11 +190,6 @@ input[type=radio]::before {
   stroke: var(--form-control-color);
 }
 
-.radio-buttons__chevron:not(.chevron-orange) svg {
-  transition: transform 0.4s;
-  transform: rotate(0deg);
-}
-
 .show-animation {
   display: block;
   opacity: 1;
@@ -208,12 +202,16 @@ input[type=radio]::before {
   animation-fill-mode: forwards;
 }
 
+.hide-animation lottie-player {
+  display: none;
+}
+
 @media only screen and (min-width: 801px) {
   .item-box {
     max-width: 500px;
     flex-grow: 1;
   }
-  .item-box .item-box__image {
+  .item-box__image {
     height: 250px;
   }
 
@@ -227,6 +225,9 @@ input[type=radio]::before {
     flex-direction: column;
     gap: 30px;
     width: auto;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .item-box__image {
