@@ -64,4 +64,4 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 })
 
-module.exports = { setActiveItem, radiosEventListener }
+module.exports = { setActiveItem, collectedData, radiosEventListener }

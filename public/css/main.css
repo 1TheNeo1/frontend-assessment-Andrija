@@ -233,6 +233,10 @@ input[type=radio]::before {
   .item-box__image {
     height: 150px;
   }
+
+  .item-box__title {
+    font-size: 24px;
+  }
 }
 @keyframes showanim {
   0% {
