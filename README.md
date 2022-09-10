@@ -15,3 +15,7 @@ For the font, I was using "sans-serif" since it was a close resemblance to the m
 
 #Added modules
 I have also installed "concurrently" - (npm install -g concurrently). Concurrently allows users to run multiple commands "run server and scss" at the same time. There is a default way for this with just writing commands next to one another in package.json -> dev, but "concurrently" is a much safer option since with the standard option if one process fails, others still keep running and you won't even notice the difference. Concurrently will on the other hand kill all the processes if one fails.
+
+#Testing
+For the testing, I have installed "Puppeteer" to be able to perform E2E (end-to-end testing). The puppeteer starts the app in the browser waits for the animation to finish, checks if the "All Photos" data is loaded on the screen, then clicks on the dropdown, clicks on the 3rd option, checks if data has changed accordingly then performs the same thing for the 1st and 2nd options. 
+Upon clicking on the dropdown it checks if the chevron has an orange color. After clicking on the 2nd option and before the 3rd option is clicked, it clicks on the image to check if the dropdown is closed and if chevron is the default color. After that, it clicks again on the dropdown, and the 3rd option is clicked. 

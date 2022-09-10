@@ -72,7 +72,7 @@ const testForDOMData = async (page, titleExpect, imageExpect) => {
 test('testing radio buttons in user perspective', async () => {
   const browser = await puppeteer.launch({
     headless: false,
-    slowMo: 80,
+    slowMo: 70,
     args: ['--window-size=1920,1080'],
     defaultViewport: {
       width: 400,
@@ -82,12 +82,26 @@ test('testing radio buttons in user perspective', async () => {
   const page = await browser.newPage()
   await page.goto('http://localhost:3000')
   await page.waitForSelector('#loader', { display: 'none', timeout: 1000 })
+  await testForDOMData(page, 'All Photos', 'http://localhost:3000/images/all-photos.jpg') // check for the data on load
 
   await page.click('.sidebar-wrapper__title')
+  let chevron = await page.$eval('.sidebar-wrapper__chevron', el => el.classList.contains('chevron-orange'))
+  expect(chevron).toBeTruthy()
+
   await page.click('input#option-2')
   await testForDOMData(page, 'Pro Photos', 'http://localhost:3000/images/pro-photos.jpg')
+
   await page.click('input#option-0')
   await testForDOMData(page, 'All Photos', 'http://localhost:3000/images/all-photos.jpg')
+
+  await page.click('#image')
+  const dropDownDisplay = await page.$eval('#radio-buttons', el => window.getComputedStyle(el).display)
+  expect(dropDownDisplay).toBe('none')
+  chevron = await page.$eval('.sidebar-wrapper__chevron', el => el.classList.contains('chevron-orange'))
+  expect(chevron).toBe(false)
+
+  await page.click('.sidebar-wrapper__title')
+
   await page.click('input#option-1')
   await testForDOMData(page, 'Free Photos', 'http://localhost:3000/images/free-photos.jpg')
-}, 10000)
+}, 12000)
