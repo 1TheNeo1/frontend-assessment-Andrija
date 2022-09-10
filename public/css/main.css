@@ -207,7 +207,7 @@ input[type=radio]::before {
 
 @media only screen and (min-width: 801px) {
   .item-box {
-    max-width: 500px;
+    max-width: 543px;
     flex-grow: 1;
   }
   .item-box__image {

@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer')
 const { setActiveItem, radiosEventListener } = require('../public/app')
+
 const mockCollectedData = [
   {
     id: 129383,
@@ -53,15 +54,22 @@ describe('testig functions from app.js', () => {
   })
   test('adding event listener to input buttons', () => {
     radiosEventListener(mockCollectedData)
-    document.querySelector('.radio-buttons-content__label').click()
-    expect(document.querySelector('.sidebar-wrapper__title p').innerText).toEqual('All Photos')
-    expect(document.getElementById('image').src).toEqual('http://localhost/images/all-photos.jpg')
-    expect(document.getElementById('title').innerText).toEqual('All Photos')
-    expect(document.getElementById('text').innerText).toEqual('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Non arcu risus quis varius quam quisque id diam. Pellentesque sit amet porttitor eget. Ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim.')
+    document.getElementById('option-2').click()
+    expect(document.querySelector('.sidebar-wrapper__title p').innerText).toEqual('Pro Photos')
+    expect(document.getElementById('image').src).toEqual('http://localhost/images/pro-photos.jpg')
+    expect(document.getElementById('title').innerText).toEqual('Pro Photos')
+    expect(document.getElementById('text').innerText).toEqual('Nunc scelerisque viverra mauris in aliquam sem. Leo vel orci porta non pulvinar neque laoreet. Odio pellentesque diam volutpat commodo sed egestas. Cum sociis natoque penatibus et magnis dis.')
   })
 })
-
-test('should click around', async () => {
+const testForDOMData = async (page, titleExpect, imageExpect) => {
+  const image = await page.$eval('#image', el => el.src)
+  const sidebarTitle = await page.$eval('.sidebar-wrapper__title p', el => el.textContent)
+  const titleText = await page.$eval('#title', el => el.textContent)
+  expect(titleText).toEqual(titleExpect)
+  expect(image).toEqual(imageExpect)
+  expect(sidebarTitle).toEqual(titleExpect)
+}
+test('testing radio buttons in user perspective', async () => {
   const browser = await puppeteer.launch({
     headless: false,
     slowMo: 80,
@@ -73,15 +81,13 @@ test('should click around', async () => {
   })
   const page = await browser.newPage()
   await page.goto('http://localhost:3000')
-  await page.waitForTimeout(1000) // wait for loading animation to complete
+  await page.waitForSelector('#loader', { display: 'none', timeout: 1000 })
+
   await page.click('.sidebar-wrapper__title')
   await page.click('input#option-2')
-  const titleText = await page.$eval('#title', el => el.textContent)
-  expect(titleText).toEqual('Pro Photos')
+  await testForDOMData(page, 'Pro Photos', 'http://localhost:3000/images/pro-photos.jpg')
   await page.click('input#option-0')
-  const image = await page.$eval('#image', el => el.src)
-  expect(image).toEqual('http://localhost:3000/images/all-photos.jpg')
+  await testForDOMData(page, 'All Photos', 'http://localhost:3000/images/all-photos.jpg')
   await page.click('input#option-1')
-  const sidebarTitle = await page.$eval('.sidebar-wrapper__title p', el => el.textContent)
-  expect(sidebarTitle).toEqual('Free Photos')
+  await testForDOMData(page, 'Free Photos', 'http://localhost:3000/images/free-photos.jpg')
 }, 10000)
