@@ -1,7 +1,7 @@
 const radioButtonsContainer = document.getElementById('radio-buttons')
 const sidebarWrapper = document.querySelector('.sidebar-wrapper')
 const sidebarChevIcon = document.querySelector('.sidebar-wrapper__chevron')
-let collectedData
+// let collectedData
 
 const showLoader = (state) => {
   const animation = document.getElementById('loader')
@@ -18,7 +18,7 @@ const showLoader = (state) => {
   }
 }
 
-const radiosEventListener = () => {
+const radiosEventListener = (collectedData) => {
   const radios = document.querySelectorAll('.radio-buttons-content__button')
   radios.forEach((radio) => {
     radio.addEventListener('change', (e) => {
@@ -37,7 +37,7 @@ const setActiveItem = (dataID, collectedData) => {
 }
 document.addEventListener('DOMContentLoaded', function () {
   fetch('http://localhost:3000/api/data.json').then((response) => response.json()).then((data) => {
-    collectedData = data.sort((a, b) => a.order - b.order)
+    const collectedData = data.sort((a, b) => a.order - b.order)
     radioButtonsContainer.innerHTML = collectedData.map((item, index) => {
       return `
      <div class="radio-buttons-content">
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
      </div>`
     }).join('')
     setActiveItem(collectedData[0].id, collectedData)
-    radiosEventListener()
+    radiosEventListener(collectedData)
     showLoader(false)
   })
   sidebarWrapper.addEventListener('click', (e) => {
@@ -64,4 +64,4 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 })
 
-module.exports = { setActiveItem, collectedData }
+module.exports = { setActiveItem, radiosEventListener }
